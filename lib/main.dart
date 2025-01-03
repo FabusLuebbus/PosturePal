@@ -6,18 +6,15 @@ import 'backend/orientation_manager.dart';
 import 'backend/esense_client.dart';
 import 'pages/home_page.dart';
 
-/// The entry point of the Focus Pocus application.
+/// The entry point of the PosturePal application.
 ///
 /// Initializes and runs the [MyApp] widget.
 void main() => runApp(const MyApp());
 
-/// The root widget of the Focus Pocus application.
+/// The root widget of the PosturePal application.
 ///
 /// Sets up the [ChangeNotifierProvider] and configures the [MaterialApp].
 class MyApp extends StatelessWidget {
-  /// Creates a [MyApp] widget.
-  ///
-  /// The [key] parameter is passed to the superclass.
   const MyApp({super.key});
 
   @override
@@ -27,7 +24,7 @@ class MyApp extends StatelessWidget {
       child: Builder(
         builder: (context) {
           return MaterialApp(
-            title: 'Focus Pocus',
+            title: 'PosturePal',
             theme: ThemeData(
               useMaterial3: true,
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
@@ -44,7 +41,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-/// Manages the state of the Focus Pocus application.
+/// Manages the central state of the PosturePal application.
 ///
 /// Handles connection to the eSense device, orientation calculations, and user preferences.
 class MyAppState extends ChangeNotifier {
@@ -71,13 +68,13 @@ class MyAppState extends ChangeNotifier {
   /// Indicates whether the Y-axis is inverted.
   bool get invertYAxis => _invertYAxis;
 
-  /// The correction value applied to the yaw angle.
+  /// The correction value to account for the earable being angled to its rotational plane.
   int get yawCorrection => _yawCorrection;
 
-  /// The maximum allowable pitch angle.
+  /// The maximum pitch angle displayed.
   int get maxPitch => _maxPitch;
 
-  /// The maximum allowable roll angle.
+  /// The maximum roll angle displayed.
   int get maxRoll => _maxRoll;
 
   /// The name of the connected eSense device.
