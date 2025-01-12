@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:posture_pal/pages/pitch_roll_visualizer.dart';
 import 'package:posture_pal/pages/preferences_page.dart';
 
-/// The main page of the Focus Pocus application.
+/// The main page of the PosturePal application.
 ///
 /// The [HomePage] widget serves as the landing page, providing navigation
 /// between different sections of the app, such as posture tracking and
