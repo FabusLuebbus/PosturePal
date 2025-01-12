@@ -98,60 +98,50 @@ class _PitchRollVisualizerState extends State<PitchRollVisualizer>
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
     updateValues(appState.orientation.pitch, appState.orientation.roll);
-    var screenSize = MediaQuery.of(context).size;
-    double sizeLimit = min(screenSize.width, screenSize.height) * 0.8;
 
-    bool isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+    bool isLandscape =
+        MediaQuery
+            .of(context)
+            .orientation == Orientation.landscape;
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Posture Tracking'),
       ),
-      body: isLandscape
-          ? Row(
-        spacing: 100,
+      body: Flex(
+        direction: isLandscape ? Axis.horizontal : Axis.vertical,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CustomPaint(
-            size: Size(sizeLimit, sizeLimit),
-            painter: PitchRollPainter(
-              pitch: _pitchAnimation.value,
-              roll: _rollAnimation.value,
-              maxPitch: appState.maxPitch,
-              maxRoll: appState.maxRoll,
-            ),
-          ),
+          Flexible(
+            flex: 2,
+            child: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+                // Use the constraints to determine the size of the CustomPaint area
+                double sizeLimit =
+                    min(constraints.maxWidth, constraints.maxHeight) * 0.8;
 
-          ElevatedButton(
-            onPressed: appState.orientationService.calibrate,
-            child: const Text("Calibrate"),
-          ),
-        ],
-      )
-          : Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: CustomPaint(
-              size: Size(sizeLimit, sizeLimit), // Define the size of the circle area
-              painter: PitchRollPainter(
-                pitch: _pitchAnimation.value,
-                roll: _rollAnimation.value,
-                maxPitch: appState.maxPitch,
-                maxRoll: appState.maxRoll,
-              ),
+                return Center(
+                  child: CustomPaint(
+                    size: Size(sizeLimit, sizeLimit),
+                    painter: PitchRollPainter(
+                      pitch: _pitchAnimation.value,
+                      roll: _rollAnimation.value,
+                      maxPitch: appState.maxPitch,
+                      maxRoll: appState.maxRoll,
+                    ),
+                  ),
+                );
+              },
             ),
           ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: appState.orientationService.calibrate,
-                child: const Text("Calibrate"),
-              ),
-            ],
+          const SizedBox(height: 20, width: 20),
+          Flexible(
+            flex: 1,
+            child: ElevatedButton(
+              onPressed: appState.orientationService.calibrate,
+              child: const Text("Calibrate"),
+            ),
           ),
         ],
       ),
