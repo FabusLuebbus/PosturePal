@@ -58,43 +58,87 @@ class HomePageState extends State<HomePage> {
     return Scaffold(
       body: LayoutBuilder(
         builder: (context, constraints) {
-          return Column(
-            children: [
-              /// Expands to fill the available space with the [mainArea].
-              Expanded(child: mainArea),
+          // Check if the orientation is landscape
+          bool isLandscape = constraints.maxWidth > constraints.maxHeight;
 
-              /// The bottom navigation bar allowing users to switch between pages.
-              SafeArea(
-                child: BottomNavigationBar(
-                  items: [
-                    BottomNavigationBarItem(
+          if (isLandscape) {
+            // Landscape mode layout
+            return Row(
+              children: [
+                /// Navigation bar on the left side in landscape mode.
+                NavigationRail(
+                  selectedIndex: selectedIndex,
+                  groupAlignment: 0.0,
+                  onDestinationSelected: (int index) {
+                    setState(() {
+                      selectedIndex = index;
+                    });
+                  },
+                  destinations: [
+                    NavigationRailDestination(
                       icon: Image.asset(
                         "lib/assets/icon_accel.png",
                         width: 30,
                         height: 30,
                         color: colorScheme.onSurface,
                       ),
-                      label: "Posture Tracking",
+                      label: Text("Posture Tracking"),
                     ),
-                    BottomNavigationBarItem(
+                    NavigationRailDestination(
                       icon: Icon(
                         Icons.settings_outlined,
                         size: 30,
                         color: colorScheme.onSurface,
                       ),
-                      label: "Preferences",
+                      label: Text("Preferences"),
                     ),
                   ],
-                  currentIndex: selectedIndex,
-                  onTap: (value) {
-                    setState(() {
-                      selectedIndex = value;
-                    });
-                  },
                 ),
-              ),
-            ],
-          );
+
+                /// Main content area expands to fill the remaining space.
+                Expanded(child: mainArea),
+              ],
+            );
+          } else {
+            // Portrait mode layout
+            return Column(
+              children: [
+                /// Expands to fill the available space with the [mainArea].
+                Expanded(child: mainArea),
+
+                /// The bottom navigation bar allowing users to switch between pages.
+                SafeArea(
+                  child: BottomNavigationBar(
+                    items: [
+                      BottomNavigationBarItem(
+                        icon: Image.asset(
+                          "lib/assets/icon_accel.png",
+                          width: 30,
+                          height: 30,
+                          color: colorScheme.onSurface,
+                        ),
+                        label: "Posture Tracking",
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(
+                          Icons.settings_outlined,
+                          size: 30,
+                          color: colorScheme.onSurface,
+                        ),
+                        label: "Preferences",
+                      ),
+                    ],
+                    currentIndex: selectedIndex,
+                    onTap: (value) {
+                      setState(() {
+                        selectedIndex = value;
+                      });
+                    },
+                  ),
+                ),
+              ],
+            );
+          }
         },
       ),
     );

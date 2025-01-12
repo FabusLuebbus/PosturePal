@@ -101,11 +101,35 @@ class _PitchRollVisualizerState extends State<PitchRollVisualizer>
     var screenSize = MediaQuery.of(context).size;
     double sizeLimit = min(screenSize.width, screenSize.height) * 0.8;
 
+    bool isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Posture Tracking'),
       ),
-      body: Column(
+      body: isLandscape
+          ? Row(
+        spacing: 100,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          CustomPaint(
+            size: Size(sizeLimit, sizeLimit),
+            painter: PitchRollPainter(
+              pitch: _pitchAnimation.value,
+              roll: _rollAnimation.value,
+              maxPitch: appState.maxPitch,
+              maxRoll: appState.maxRoll,
+            ),
+          ),
+
+          ElevatedButton(
+            onPressed: appState.orientationService.calibrate,
+            child: const Text("Calibrate"),
+          ),
+        ],
+      )
+          : Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
@@ -169,8 +193,9 @@ class PitchRollPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final double radius = size.width / 2;
-    final Offset center = Offset(radius, radius);
+    final double maxRadius = size.width / 2;
+    final Offset center = Offset(maxRadius, maxRadius);
+    final double radius = maxRadius * 0.9;
 
     // Draw the darker background circle
     Paint backgroundPaint = Paint()
