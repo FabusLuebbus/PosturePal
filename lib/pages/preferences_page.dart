@@ -25,6 +25,7 @@ class PreferencesPage extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
+          buildSectionTitle("Please always press confirm after changing values in text fields!"),
           buildSectionTitle("General"),
           buildSwitchTile(
             context,
