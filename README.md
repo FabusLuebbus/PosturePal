@@ -1,16 +1,10 @@
-# posture_pal
+# PosturePal
+A simple posture detection system using the eSense earables to track head position and orientation.
 
-A new Flutter project.
+Tested on Linux and Android.
 
-## Getting Started
+When the app starts, navigate to the preferences page and enter your eSense device's name.
+Confirm the input! (this holds for free text all input fields)
+Then press connect. Shortly after, the visualization on the home page should be running.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Have fun playing around with the configuration options!
